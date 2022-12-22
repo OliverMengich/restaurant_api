@@ -1,0 +1,13 @@
+name: Restaurant API workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing jobs
+        run: echo "Hello, World!!"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        run: echo "Deploying....."
