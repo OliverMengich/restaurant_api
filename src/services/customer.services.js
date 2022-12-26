@@ -28,6 +28,7 @@ export const getCustomerById = async function (id) {
             foreignKey: 'CustomerCustomerId'
         }]
     });
+    console.log(customer);
     return customer;
 }
 export const updateCustomer = async function (id,update) {
