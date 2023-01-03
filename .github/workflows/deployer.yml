@@ -17,6 +17,8 @@ jobs:
       - name: Get Store Directory
         id: cache-dir
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+      - name: Echo STORE_PATH
+        run: echo "store path is ${{ steps.cache-dir.outputs.STORE_PATH }}""
       - name: Cache Dependencies
         id: cache-deps
         uses: actions/cache@v3
@@ -27,10 +29,10 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       - name: Echo Cache Hit
         run: |
-            echo "Cache Hit: ${{ steps.cache-deps.outputs.cache-hit }}"
+            echo "Cache Hit: ${{ steps.cache-deps.outputs }}"
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
-        run:  pnpm i 
+        run:  pnpm i --frozen-lockfile
       - name: Start Development Server
         run: npm run start && npx wait-on http://127.0.0.1:$PORT
       - name: Run Unit Tests

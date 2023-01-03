@@ -1,8 +1,9 @@
 import dotenv from 'dotenv';
 import path from 'path';
+const envronment = process.env.NODE_ENV.trim(' ');
 dotenv.config({
     debug: true,
-    path: path.resolve('src','env',`${process.env.NODE_ENV.trim(' ')}.env`)
+    path: path.resolve('src','env',`${envronment}.env`)
 })
 const config = {
     NODE_ENV: process.env.NODE_ENV,
