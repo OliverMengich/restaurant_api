@@ -8,7 +8,7 @@
     "utest": "set NODE_ENV=testing&& mocha ./test/unit/index.js --exit --timeout 10000",
     "build": "babel app.js ",
     "start": "set NODE_ENV=development&& npm run build && nodemon app.js",
-    "production": "set NODE_ENV=production&& npm run build && nodemon app.js"
+    "production": "set NODE_ENV=production&& npm run build && node app.js"
   },
   "type": "module",
   "keywords": [],
