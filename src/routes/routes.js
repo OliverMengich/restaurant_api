@@ -7,7 +7,8 @@ import {getAllCustomers, createACustomer, getACustomer,deleteACustomer,updateACu
 import { getDishes,createADish,deleteADish,getADish,updateADish } from '../controllers/dishes.controller.js';
 import { getOrders,createAnOrder,deleteAnOrder,getAnOrder,updateAnOrder } from '../controllers/orders.controller.js';
 import { login } from '../controllers/auth.controller.js';
-import func1 from '../middlewares/index.js'
+import customerAuthMiddleware from '../middlewares/customer_Auth.js';
+import adminAuthMiddleware from '../middlewares/admin_auth.js';
 OrdersSchema.belongsTo(CustomersSchema,{foreignKey: 'customer',});
 OrdersSchema.belongsTo(DishesSchema,{foreignKey: 'dishes',});
 CustomersSchema.hasMany(FavouriteDishes,{onDelete: 'CASCADE'})
@@ -24,10 +25,10 @@ router.route("/customer/:id").get(getACustomer).put(updateACustomer).delete(dele
 router.route("/auth").get((req,res)=>{
     res.send('Login here')
 }).post(login)
-router.route("/dishes").get(func1,getDishes).post(func1, createADish);
-router.route("/dishes/:id").get(getADish).put(updateADish).delete(deleteADish);
-router.route("/orders").get(getOrders).post(createAnOrder);
-router.route("/order/:id").get(getAnOrder).put(updateAnOrder).delete(deleteAnOrder);
+router.route("/dishes").get(getDishes).post(adminAuthMiddleware, createADish);
+router.route("/dishes/:id").get(getADish).put(adminAuthMiddleware,updateADish).delete(adminAuthMiddleware, deleteADish);
+router.route("/orders").get(adminAuthMiddleware,getOrders).post(customerAuthMiddleware, createAnOrder);
+router.route("/order/:id").get(customerAuthMiddleware,getAnOrder).put(customerAuthMiddleware, updateAnOrder).delete(customerAuthMiddleware, deleteAnOrder);
 router.get('/staff',async function (req, res) {
     // filter the output time users of type ADMIN
     const staffMembers =await CustomersSchema.findAll({

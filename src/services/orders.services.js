@@ -8,7 +8,7 @@ export const getAllOrders = async function () {
                 foreignKey: 'customer'
             }]
         });
-        console.log(orders);
+        // console.log(orders);
         return orders
     } catch (error) {
         console.log(error);
@@ -16,20 +16,31 @@ export const getAllOrders = async function () {
     
 };
 export const createOrder = async function(orderData){
-    console.log(req.body);
-    if (!req.body) {
-        return;
+    // console.log(req.userInfo);
+    if (!orderData) {
+        throw new Error("No data Provided")
     }
     const order = await OrdersSchema.create({...orderData})
     return order;
 }
-export const getOrderById = async function (id) {
-    const order = await OrdersSchema.findByPk(id,{
-        include:[{
-            model: CustomersSchema
-        }]
-    });
-    return order;
+export const getOrderById = async function (id,userId) {
+    console.log(id,userId);
+    try {
+        const order = await OrdersSchema.findOne({
+            where:{
+                id:id,
+                customer: userId
+            },
+            include:[{
+                model: CustomersSchema,
+                foreignKey: 'customer'
+            }]
+        });
+        console.log(order);
+        return order;
+    } catch (error) {
+        console.log(error);
+    }
 };
 export const updateOrder = async function (id, updateOrderData) {
     const order = await OrdersSchema.findByPk(id);
@@ -41,10 +52,10 @@ export const updateOrder = async function (id, updateOrderData) {
 };
 export const deleteOrder = async function(id){
     const order = await OrdersSchema.findByPk(id);
-    if(!customer){
+    if(!order){
         return{error: 'No Order found!!'}
     }
     const res =await order.destroy();
     console.log(res);
-    return {msg:'customer deleted'}
+    return {msg:'Order deleted'}
 }

@@ -14,6 +14,7 @@ export const getDishes = async (req, res) => {
     }
 }
 export const createADish =  (async (req, res) => {
+    console.log('request body is: ',req.body);
     try {
         const dish = await createDish(req.body);
         return res.json({

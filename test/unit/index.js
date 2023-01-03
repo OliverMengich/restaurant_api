@@ -8,7 +8,9 @@ describe('Unit Testing',()=>{
     
     describe('Test 1',()=>{
         it('Expect customers',async ()=>{
+            console.log('Testing......................');
             const rs = await getCustomers();
+            console.log(rs);
             expect(rs).to.be.an('array');
         })
     })
@@ -36,7 +38,8 @@ describe('Unit Testing',()=>{
                 lastName: 'adminlast',
                 email:'staff1@gmail.com',
                 userType: 'ADMIN',
-                birthday: new Date('2000-11-10').toISOString()
+                birthday: new Date('2000-11-10').toISOString(),
+                password: '123456'
             }
             const rs = await createCustomer(newStaff);
             expect(rs).to.be.an('object');

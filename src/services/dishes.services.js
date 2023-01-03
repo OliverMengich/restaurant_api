@@ -7,14 +7,15 @@ export const getAllDishes = async function () {
         return { error }
     }
 }
-export const createDish = async function (req, res) {
-    if (!req.body) {
-        return
+export const createDish = async function (req) {
+    if (!req) {
+        throw new Error('No data Provided')
     }
     try {
-        const dish = await DishesSchema.create({...req.body});
+        const dish = await DishesSchema.create({...req});
         return dish
     } catch (error) {
+        console.log(error);
         return { error }
     }
 }

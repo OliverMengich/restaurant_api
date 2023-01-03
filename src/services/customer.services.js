@@ -5,14 +5,14 @@ export const getCustomers =async function () {
         const customers = await CustomersSchema.findAll({
             where:{
                 userType: "USER"
-            }
-            // },
-            // include:[{
-            //     model: OrdersSchema,
-            //     foreignKey: 'customer'
-            // }]
+            },
+            // include orders from orders table
+            include:[{
+                model: OrdersSchema,
+                foreignKey: 'customer'
+            }]
         });
-        return customers
+        return customers;
     } catch (error) {
         console.log(error);
     }

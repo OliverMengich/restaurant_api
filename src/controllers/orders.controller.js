@@ -2,7 +2,6 @@ import { getAllOrders, createOrder, deleteOrder, getOrderById, updateOrder } fro
 export const getOrders = async (req,res)=>{
     try {
         const orders = await getAllOrders();
-        console.log(orders);
         return res.json({
             orders,
             status: 'success'
@@ -12,8 +11,11 @@ export const getOrders = async (req,res)=>{
     }
 }
 export const createAnOrder = async (req,res)=>{
+    console.log('Customer LoggedIn is: ',req.userInfo);
     try {
-        const order = await createOrder(req.body);
+        const order = await createOrder({...req.body,
+            customer: req.userInfo.userId
+        });
         return res.json({
             order,
             status: 'success'
@@ -23,8 +25,12 @@ export const createAnOrder = async (req,res)=>{
     }
 }
 export const getAnOrder = async (req,res)=>{
+    console.log('Customer loggedIn is:',req.userInfo);
     try {
-        const order = await getOrderById(req.params.id);
+        const order = await getOrderById(req.params.id,req.userInfo.userId);
+        if (order===null) {
+            return res.status(404).json({error: 'Order not found'});
+        }
         return res.json({
             order,
             status: 'success'

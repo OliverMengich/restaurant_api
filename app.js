@@ -4,7 +4,7 @@ import router from './src/routes/routes.js';
 import sequelize from './src/database/db.js';
 import morgan from 'morgan'
 const app = express();
-if (config.NODE_ENV.trim(' ')=== 'development') {
+if (config.NODE_ENV=== 'development') {
     app.use(morgan('dev'))
 }
 app.use(express.json())
@@ -14,6 +14,6 @@ app.get('/',(rq,res)=>{
 });
 sequelize.sync().then(()=>{
     app.listen(config.PORT,config.HOST,()=>{
-        console.log(`Server Running http://${config.HOST}:${config.PORT}`);
+        console.log(`Server Running http://${config.HOST}:${config.PORT} in ${config.NODE_ENV} mode`);
     })
-})
+}).catch(err=>{console.log(err)})
