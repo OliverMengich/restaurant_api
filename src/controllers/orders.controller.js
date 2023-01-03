@@ -41,7 +41,7 @@ export const getAnOrder = async (req,res)=>{
 }
 export const updateAnOrder = async (req,res)=>{
     try {
-        const order = await updateOrder(req.params.id,req.body);
+        const order = await updateOrder(req.params.id, req.userInfo.userId, req.body);
         return res.json({
             order,
             status: 'success'
@@ -52,8 +52,8 @@ export const updateAnOrder = async (req,res)=>{
 }
 export const deleteAnOrder = async(req,res)=>{
     try {
-        const res = await deleteOrder(req.params.id);
-        return res.json(res)
+        const res = await deleteOrder(req.params.id,req.userInfo.userId);
+        return res.json(res);
     } catch (error) {
         return res.status(500).json({error})
     }

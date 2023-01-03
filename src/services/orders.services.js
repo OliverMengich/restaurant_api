@@ -42,16 +42,29 @@ export const getOrderById = async function (id,userId) {
         console.log(error);
     }
 };
-export const updateOrder = async function (id, updateOrderData) {
-    const order = await OrdersSchema.findByPk(id);
+export const updateOrder = async function (id,userId, updateOrderData) {
+    const order = await OrdersSchema.findOne({
+        where:{
+            id:id,
+            customer: userId
+        }
+    });
+    if (order===null) {
+        return { error: "No Order found!!" };
+    }
     order.set({
         ...updateOrderData
     });
     await order.save();
     return order;
 };
-export const deleteOrder = async function(id){
-    const order = await OrdersSchema.findByPk(id);
+export const deleteOrder = async function(id,userId){
+    const order = await OrdersSchema.findOne({
+        where:{
+            id:id,
+            customer: userId
+        }
+    });
     if(!order){
         return{error: 'No Order found!!'}
     }
