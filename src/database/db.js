@@ -1,7 +1,6 @@
 import {Sequelize} from 'sequelize';
 import config from '../config/config.js';
-console.log(config.DATABASE)
-const sequelize = new Sequelize(config.DATABASE,config.USERNAME,config.PASSWORD,{
+const sequelize = new Sequelize(config.DATABASE_URL,{
     host: config.HOST,
     dialect: 'postgres',
     logging: false

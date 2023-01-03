@@ -10,6 +10,7 @@ const config = {
     PORT: process.env.PORT || 3000,
     DATABASE: process.env.DATABASE,
     USERNAME: process.env.USER_NAME,
-    PASSWORD: process.env.PASSWORD
+    PASSWORD: process.env.PASSWORD,
+    DATABASE_URL: process.env.DATABASE_URL
 }
 export default config;

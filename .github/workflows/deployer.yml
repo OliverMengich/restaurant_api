@@ -4,7 +4,10 @@ jobs:
   test:
     environment: testing
     env:
-      PORT: 4000
+      PORT: 8080
+      HOST: localhost
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      NODE_ENV: development
     runs-on: ubuntu-latest
     steps:
       - name: Get Code
@@ -34,7 +37,7 @@ jobs:
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run:  pnpm i --frozen-lockfile
       - name: Start Development Server
-        run: npm run start && npx wait-on http://127.0.0.1:$PORT
+        run: npm run production && npx wait-on http://127.0.0.1:$PORT
       - name: Run Unit Tests
         run: npm run utest
       - name: Run Integration Test
