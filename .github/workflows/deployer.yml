@@ -18,7 +18,7 @@ jobs:
         id: cache-dir
         run: echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
       - name: Echo STORE_PATH
-        run: echo "store path is ${{ steps.cache-dir.outputs.STORE_PATH }}""
+        run: echo "store path is ${{ steps.cache-dir.outputs.STORE_PATH }}"
       - name: Cache Dependencies
         id: cache-deps
         uses: actions/cache@v3
