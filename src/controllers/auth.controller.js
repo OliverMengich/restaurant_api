@@ -1,10 +1,10 @@
 import { loginCustomer } from "../services/auth.services.js";
 export const login = async (req, res) => {
     try {
-        const encrypted = await loginCustomer(req.body.email, req.body.password);
-        if (encrypted) {
+        const token = await loginCustomer(req.body.email, req.body.password);
+        if (token) {
             return res.json({
-                encrypted,
+                token,
                 status: 'success'
             })
         }
