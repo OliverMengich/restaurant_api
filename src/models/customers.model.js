@@ -24,6 +24,10 @@ const CustomersSchema = sequelize.define('Customers',{
         unique: true,
         allowNull: false
     },
+    password:{
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     userType:{
         type: DataTypes.ENUM('USER','ADMIN'),
         allowNull: false,

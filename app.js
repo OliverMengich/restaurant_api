@@ -2,7 +2,11 @@ import express from 'express';
 import config from './src/config/config.js';
 import router from './src/routes/routes.js';
 import sequelize from './src/database/db.js';
+import morgan from 'morgan'
 const app = express();
+if (config.NODE_ENV.trim(' ')=== 'development') {
+    app.use(morgan('dev'))
+}
 app.use(express.json())
 app.use('/api',router);
 app.get('/',(rq,res)=>{

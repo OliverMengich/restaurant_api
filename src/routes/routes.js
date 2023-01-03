@@ -6,6 +6,8 @@ import FavouriteDishes from '../models/favouritedishes.model.js';
 import {getAllCustomers, createACustomer, getACustomer,deleteACustomer,updateACustomer} from '../controllers/customer.controller.js'
 import { getDishes,createADish,deleteADish,getADish,updateADish } from '../controllers/dishes.controller.js';
 import { getOrders,createAnOrder,deleteAnOrder,getAnOrder,updateAnOrder } from '../controllers/orders.controller.js';
+import { login } from '../controllers/auth.controller.js';
+import func1 from '../middlewares/index.js'
 OrdersSchema.belongsTo(CustomersSchema,{foreignKey: 'customer',});
 OrdersSchema.belongsTo(DishesSchema,{foreignKey: 'dishes',});
 CustomersSchema.hasMany(FavouriteDishes,{onDelete: 'CASCADE'})
@@ -19,8 +21,10 @@ router.get('/restaurant', function (req, res) {
 })
 router.route("/customers").get(getAllCustomers).post(createACustomer);
 router.route("/customer/:id").get(getACustomer).put(updateACustomer).delete(deleteACustomer);
-
-router.route("/dishes").get(getDishes).post(createADish);
+router.route("/auth").get((req,res)=>{
+    res.send('Login here')
+}).post(login)
+router.route("/dishes").get(func1,getDishes).post(func1, createADish);
 router.route("/dishes/:id").get(getADish).put(updateADish).delete(deleteADish);
 router.route("/orders").get(getOrders).post(createAnOrder);
 router.route("/order/:id").get(getAnOrder).put(updateAnOrder).delete(deleteAnOrder);

@@ -2,11 +2,30 @@ name: Restaurant API workflow
 on: push
 jobs:
   test:
+    environment: testing
+    env:
+      PORT: 8080
     runs-on: ubuntu-latest
     steps:
-      - name: Testing jobs
-        run: echo "Hello, World!!"
+      - name: Get Code
+        uses: actions/checkout@v3
+      - name: Cache dependencies
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: cache-deps-${{ hashFiles('**/package-lock.json') }}
+      - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run:  npm ci
+      - name: Start Development Server
+        run: npm run start && npx wait-on http://127.0.0.1:$PORT
+      - name: Run Unit Tests
+        run: npm run utest
+      - name: Run Integration Test
+        run: npm run itest
   deploy:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - name: deploy

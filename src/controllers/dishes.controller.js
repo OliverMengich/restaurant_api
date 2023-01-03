@@ -1,5 +1,6 @@
 import { getAllDishes, createDish, deleteDish, getDishById, updateDish } from "../services/dishes.services.js";
 export const getDishes = async (req, res) => {
+    console.log('Req.User info is: ',req.userInfo)
     try {
         console.log("getDishes");
         const dishes = await getAllDishes();
@@ -12,7 +13,7 @@ export const getDishes = async (req, res) => {
         res.status(404).json({error: err});
     }
 }
-export const createADish = async (req, res) => {
+export const createADish =  (async (req, res) => {
     try {
         const dish = await createDish(req.body);
         return res.json({
@@ -22,7 +23,7 @@ export const createADish = async (req, res) => {
     } catch (error) {
         return res.status(500).json({error})
     }
-}
+})
 export const getADish = async (req, res) => {
     try {
         const dish = await getDishById(req.params.id);
