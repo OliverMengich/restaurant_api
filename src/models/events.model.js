@@ -1,13 +1,30 @@
-import sequelize from "../database/db.js";
+import sequelize from "../database/db";
 import { DataTypes } from 'sequelize';
-const OrdersSchema = sequelize.define('orders',{
+const Event = sequelize.define('Event',{
+    //date, time, room, customer, dishes, quantity, total
     id: {
         type: DataTypes.UUID,
         primaryKey: true,
         allowNull: false,
         defaultValue: DataTypes.UUIDV4
     },
-    customer:{
+    date: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+    time: {
+        type: DataTypes.TIME,
+        allowNull: false,
+    },
+    room: {
+        type: DataTypes.UUID,
+        allowNull: false,
+        references: {
+            model: 'ConferenceRoom',
+            key: 'id'
+        }
+    },
+    customer: {
         type: DataTypes.UUID,
         allowNull: false,
         references: {
@@ -23,20 +40,14 @@ const OrdersSchema = sequelize.define('orders',{
             key: 'id'
         }
     },
-    delivered:{
-        type: DataTypes.ENUM('PENDING','DELIVERED'),
-        defaultValue: 'PENDING',
-        allowNull: false
-    },
-    quantity:{
+    quantity: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
     },
-    total:{
+    total: {
         type: DataTypes.FLOAT,
-        allowNull: false
+        allowNull: false,
     }
 },{
     timestamps: true
 });
-export default OrdersSchema;

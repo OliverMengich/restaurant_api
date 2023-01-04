@@ -14,6 +14,23 @@ const DishesSchema = sequelize.define('Dishes',{
     price: {
         type: DataTypes.FLOAT,
         allowNull: false
+    },
+    imageUrl:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    category:{
+        type: DataTypes.ENUM('BREAKFAST','LUNCH','DINNER','SNACKS','DRINKS'),
+        allowNull: false
+    },
+    featured:{
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false
     }
 },{
     timestamps: true

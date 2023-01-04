@@ -6,6 +6,6 @@ const sequelize = new Sequelize(config.DATABASE_URL,{
     logging: false
 });
 
-sequelize.authenticate().then(()=>console.log("Connected to the Database"))
+await sequelize.authenticate().then(()=>console.log("Connected to the Database"))
 
 export default sequelize;

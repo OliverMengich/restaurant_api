@@ -24,6 +24,10 @@ const CustomersSchema = sequelize.define('Customers',{
         unique: true,
         allowNull: false
     },
+    phone:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     password:{
         type: DataTypes.STRING,
         allowNull: false,
