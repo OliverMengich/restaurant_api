@@ -3,16 +3,24 @@ import CustomersSchema from '../models/customers.model.js';
 import DishesSchema from '../models/dishes.model.js';
 import OrdersSchema from '../models/orders.models.js';
 import FavouriteDishes from '../models/favouritedishes.model.js';
+import Reservation from '../models/reservations.model.js';
+import Event from '../models/events.model.js';
 import {getAllCustomers, createACustomer, getACustomer,deleteACustomer,updateACustomer} from '../controllers/customer.controller.js'
 import { getDishes,createADish,deleteADish,getADish,updateADish } from '../controllers/dishes.controller.js';
 import { getOrders,createAnOrder,deleteAnOrder,getAnOrder,updateAnOrder } from '../controllers/orders.controller.js';
 import { login } from '../controllers/auth.controller.js';
+import { getAllConferenceRooms, createAConferenceRoom, deleteAConferenceRoom, getAConferenceRoom, updateAConferenceRoom } from '../controllers/conferenceRooms.controllers.js';
+import { getAllEvents,createAnEvent, deleteAnEvent,getAnEvent,updateAnEvent } from '../controllers/events.controllers.js';
+import { getAllReservations,createAReservation,deleteAReservation,getAReservation,updateAReservation } from '../controllers/reservations.controllers.js';
+import { getAllRooms,createARoom,deleteARoom,getARoom,updateARoom } from '../controllers/rooms.controllers.js';
 import customerAuthMiddleware from '../middlewares/customer_Auth.js';
 import adminAuthMiddleware from '../middlewares/admin_auth.js';
 OrdersSchema.belongsTo(CustomersSchema,{foreignKey: 'customer',});
 OrdersSchema.belongsTo(DishesSchema,{foreignKey: 'dishes',});
 CustomersSchema.hasMany(FavouriteDishes,{onDelete: 'CASCADE'})
-CustomersSchema.hasMany(OrdersSchema)
+CustomersSchema.hasMany(OrdersSchema);
+DishesSchema.hasMany(Reservation,{foreignKey: 'dishes', constraints: true, onDelete: 'CASCADE'});
+Reservation.belongsTo(CustomersSchema,{foreignKey: 'customer', constraints: false, onDelete: 'CASCADE'});
 const router = Router();
 router.get('/', (req, res) => {
     res.send('<h1>Welcome to restaurant API</h1>');
@@ -22,13 +30,20 @@ router.get('/restaurant', function (req, res) {
 })
 router.route("/customers").get(getAllCustomers).post(createACustomer);
 router.route("/customer/:id").get(getACustomer).put(updateACustomer).delete(deleteACustomer);
-router.route("/auth").get((req,res)=>{
-    res.send('Login here')
-}).post(login)
+router.route("/auth").get((req,res)=>{res.send('Login here')}).post(login)
 router.route("/dishes").get(getDishes).post(adminAuthMiddleware, createADish);
 router.route("/dishes/:id").get(getADish).put(adminAuthMiddleware,updateADish).delete(adminAuthMiddleware, deleteADish);
 router.route("/orders").get(adminAuthMiddleware,getOrders).post(customerAuthMiddleware, createAnOrder);
 router.route("/order/:id").get(customerAuthMiddleware,getAnOrder).put(customerAuthMiddleware, updateAnOrder).delete(customerAuthMiddleware, deleteAnOrder);
+
+router.route("/conferenceRooms").get(getAllConferenceRooms).post(adminAuthMiddleware, createAConferenceRoom);
+router.route("/conferenceRoom/:id").get(getAConferenceRoom).put(adminAuthMiddleware, updateAConferenceRoom).delete(adminAuthMiddleware, deleteAConferenceRoom);
+router.route("/events").get(getAllEvents).post((adminAuthMiddleware || customerAuthMiddleware ), createAnEvent);
+router.route("/event/:id").get(getAnEvent).put(adminAuthMiddleware, updateAnEvent).delete(adminAuthMiddleware, deleteAnEvent);
+router.route("/reservations").get(getAllReservations).post((customerAuthMiddleware || adminAuthMiddleware), createAReservation);
+router.route("/reservation/:id").get(getAReservation).put((customerAuthMiddleware || adminAuthMiddleware), updateAReservation).delete(customerAuthMiddleware, deleteAReservation);
+router.route("/rooms").get(getAllRooms).post(adminAuthMiddleware, createARoom);
+router.route("/room/:id").get(getARoom).put(adminAuthMiddleware, updateARoom).delete(adminAuthMiddleware, deleteARoom);
 router.get('/staff',async function (req, res) {
     // filter the output time users of type ADMIN
     const staffMembers =await CustomersSchema.findAll({

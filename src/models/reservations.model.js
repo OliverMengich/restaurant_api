@@ -1,5 +1,5 @@
-import sequelize from "../database/db";
-import { DataTypes } from 'sequelize';
+import sequelize from "../database/db.js";
+import { DataTypes, Sequelize } from 'sequelize';
 const Reservation = sequelize.define('Reservation',{
     //date, time, room, customer, dishes, quantity, total
     id: {
@@ -20,7 +20,7 @@ const Reservation = sequelize.define('Reservation',{
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'ConferenceRoom' || 'Accommodation',
+            model: 'ConferenceRooms' || 'Accommodation',
             key: 'id'
         }
     },
@@ -30,17 +30,21 @@ const Reservation = sequelize.define('Reservation',{
         references: {
             model: 'Customers',
             key: 'customer_id'
-
         }
     },
     dishes: {
-        type: DataTypes.ARRAY(DataTypes.UUID),
+        type: DataTypes.UUID ,
         allowNull: false,
         references: {
             model: 'Dishes',
             key: 'id'
         },
-        defaultValue: []
+        get() {
+            return this.getDataValue('dishes').split(',');
+        },
+        set(val) {
+            return this.setDataValue('dishes', val.join(','));
+        }
     },
     paid:{
         type: DataTypes.ENUM('PENDING','PAID'),

@@ -1,4 +1,4 @@
-import sequelize from "../database/db";
+import sequelize from "../database/db.js";
 import { DataTypes } from 'sequelize';
 const Accommodation = sequelize.define('Accommodation',{
     // id, bed type price, room number, room type, room size, room description, room image, room status
@@ -42,4 +42,5 @@ const Accommodation = sequelize.define('Accommodation',{
     }
 },{
     timestamps: true
-})
+});
+export default Accommodation;

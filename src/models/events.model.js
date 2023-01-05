@@ -1,6 +1,6 @@
-import sequelize from "../database/db";
+import sequelize from "../database/db.js";
 import { DataTypes } from 'sequelize';
-const Event = sequelize.define('Event',{
+const Event = sequelize.define('Events',{
     //date, time, room, customer, dishes, quantity, total
     id: {
         type: DataTypes.UUID,
@@ -20,7 +20,7 @@ const Event = sequelize.define('Event',{
         type: DataTypes.UUID,
         allowNull: false,
         references: {
-            model: 'ConferenceRoom',
+            model: 'ConferenceRooms',
             key: 'id'
         }
     },
@@ -51,3 +51,4 @@ const Event = sequelize.define('Event',{
 },{
     timestamps: true
 });
+export default Event;

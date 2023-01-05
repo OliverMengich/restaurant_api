@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../database/db";
+import sequelize from "../database/db.js";
 const ConferenceRoom = sequelize.define('ConferenceRoom',{
     // id, room number, seats, price,
     id: {
@@ -21,4 +21,5 @@ const ConferenceRoom = sequelize.define('ConferenceRoom',{
         type: DataTypes.FLOAT,
         allowNull: false,
     }
-})
+});
+export default ConferenceRoom;
