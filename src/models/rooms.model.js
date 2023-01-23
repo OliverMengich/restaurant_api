@@ -19,6 +19,7 @@ const Accommodation = sequelize.define('Accommodation',{
     roomNumber: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        autoIncrement: true
     },
     roomType: {
         type: DataTypes.ENUM('SINGLE','DOUBLE','TRIPLE'),
@@ -37,7 +38,8 @@ const Accommodation = sequelize.define('Accommodation',{
         allowNull: false,
     },
     roomStatus: {
-        type: DataTypes.ENUM('AVAILABLE','NOT AVAILABLE'),
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
         allowNull: false,
     }
 },{

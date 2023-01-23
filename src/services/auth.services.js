@@ -4,7 +4,7 @@ import CryptoJS from "crypto-js";
 export const loginCustomer = async function (email, password) {
     const customer = await CustomersSchema.findOne({
         where: {
-            email: email,
+            email,
         }
     });
     if (customer && customer.password ===password) {

@@ -6,11 +6,6 @@ export const getCustomers =async function () {
             where:{
                 userType: "USER"
             },
-            // include orders from orders table
-            include:[{
-                model: OrdersSchema,
-                foreignKey: 'customer'
-            }]
         });
         return customers;
     } catch (error) {

@@ -1,10 +1,7 @@
 import { getAllDishes, createDish, deleteDish, getDishById, updateDish } from "../services/dishes.services.js";
 export const getDishes = async (req, res) => {
-    console.log('Req.User info is: ',req.userInfo)
     try {
-        console.log("getDishes");
         const dishes = await getAllDishes();
-        console.log(dishes);
         return res.json({
             dishes,
             status: 'success'
