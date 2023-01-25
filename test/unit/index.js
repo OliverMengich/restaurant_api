@@ -45,5 +45,8 @@ describe('Unit Testing',()=>{
             expect(rs).to.be.an('object');
         })
     })
-    //get orders from customers
+    //Only an Administrator can add a person of AdminType
+    describe("Adds an administrator",()=>{
+        it("Only admin can add an Admin")
+    })
 })

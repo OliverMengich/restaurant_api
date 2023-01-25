@@ -32,19 +32,10 @@ const Reservation = sequelize.define('Reservation',{
             key: 'customer_id'
         }
     },
-    dishes: {
-        type: DataTypes.UUID ,
+    meals: {
+        type: DataTypes.ARRAY(DataTypes.UUID),
         allowNull: false,
-        references: {
-            model: 'Dishes',
-            key: 'id'
-        },
-        get() {
-            return this.getDataValue('dishes').split(',');
-        },
-        set(val) {
-            return this.setDataValue('dishes', val.join(','));
-        }
+        defaultValue: []
     },
     paid:{
         type: DataTypes.ENUM('PENDING','PAID'),

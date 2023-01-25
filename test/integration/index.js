@@ -13,5 +13,30 @@ describe('Integration Testing(Restaurant API)',()=>{
                 done()
             })
         })
+    });
+    describe('Fails on ading admin without AdminLogin', () => { 
+        chai.request(`http://localhost:${config.PORT}/api`).post('/customer')
+        .send({
+
+        }).auth("Bearer","")
+        .end((err,res)=>{
+            res.should.have.status(401);
+            res.body.should.be({error:"Not Authenticated"})
+        })
     })
+    describe('Passes Upon adding an administrator when logged in', () => {
+        chai.request(`http://localhost:${config.PORT}/api`).post('/customer')
+        .send({
+            firstName:"Admin",
+            lastName:"Admin",
+            email:"admin1@gmail.com",
+            password:"password",
+            userType:"ADMIN"
+        }).auth("Bearer","")
+        .end((err,res)=>{
+            res.should.have.status(200);
+            res.body.should.be({message:"Admin Added"})
+        })
+    })
+
 })

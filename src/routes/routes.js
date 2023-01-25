@@ -32,7 +32,7 @@ router.get('/', (req, res) => {
 router.get('/restaurant', function (req, res) {
     res.send('<h2>Restaurant Route</h2>')
 })
-router.route("/customers").get(getAllCustomers).post(createACustomer);
+router.route("/customers").get(getAllCustomers).post(adminAuthMiddleware, createACustomer);
 router.route("/customer/:id").get(getACustomer).put(updateACustomer).delete(deleteACustomer);
 router.route("/auth").get((req,res)=>{res.send('Login here')}).post(login)
 router.route("/dishes").get(getDishes).post(adminAuthMiddleware, createADish);
@@ -40,7 +40,7 @@ router.route("/dishes/:id").get(getADish).put(adminAuthMiddleware,updateADish).d
 router.route("/orders").get(adminAuthMiddleware,getOrders).post(customerAuthMiddleware, createAnOrder);
 router.route("/order/:id").get(customerAuthMiddleware,getAnOrder).put(customerAuthMiddleware, updateAnOrder).delete(customerAuthMiddleware, deleteAnOrder);
 
-router.route("/conferenceRooms").get(getAllConferenceRooms).post(adminAuthMiddleware, createAConferenceRoom);
+router.route("/conference-rooms").get(getAllConferenceRooms).post(adminAuthMiddleware, createAConferenceRoom);
 router.route("/conferenceRoom/:id").get(getAConferenceRoom).put(adminAuthMiddleware, updateAConferenceRoom).delete(adminAuthMiddleware, deleteAConferenceRoom);
 router.route("/events").get(getAllEvents).post((adminAuthMiddleware || customerAuthMiddleware ), createAnEvent);
 router.route("/event/:id").get(getAnEvent).put(adminAuthMiddleware, updateAnEvent).delete(adminAuthMiddleware, deleteAnEvent);
