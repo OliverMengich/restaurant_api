@@ -1,13 +1,27 @@
 import Reservation from "../models/reservations.model.js";
+import DishesSchema from "../models/dishes.model.js";
 export const getReservations = async function () {
     try {
         const reservations = await Reservation.findAll();
+        console.log({...reservations});
         return reservations;
     } catch (error) {
         console.log(error);
     }
 }
 export const createReservation = async function (reservationData) {
+    if(reservationData.meals){
+        const dishesId = await (await DishesSchema.findAll()).reduce((acc,val)=>{
+            acc.push(val.id)
+            return acc;
+        },[]);
+        console.log('Dishes ID:', dishes)
+        reservationData.meals.forEach(element => {
+            if (dishesId.indexOf(element) === -1) {
+                throw new Error("Meal not found, try adding again!!!");
+            }
+        });
+    }
     const reservation = await Reservation.create({ ...reservationData });
     return reservation;
 }

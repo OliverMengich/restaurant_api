@@ -27,11 +27,8 @@ DishesSchema.hasMany(Reservation,{foreignKey: 'dishes', constraints: true, onDel
 Reservation.belongsTo(CustomersSchema,{foreignKey: 'customer', constraints: false, onDelete: 'CASCADE'});
 const router = Router();
 router.get('/', (req, res) => {
-    res.send('<h1>Welcome to restaurant API</h1>');
+    return res.json({message: "Welcome to L`Assiette Restaurant API"});
 });
-router.get('/restaurant', function (req, res) {
-    res.send('<h2>Restaurant Route</h2>')
-})
 router.route("/customers").get(getAllCustomers).post(adminAuthMiddleware, createACustomer);
 router.route("/customer/:id").get(getACustomer).put(updateACustomer).delete(deleteACustomer);
 router.route("/auth").get((req,res)=>{res.send('Login here')}).post(login)
@@ -41,7 +38,7 @@ router.route("/orders").get(adminAuthMiddleware,getOrders).post(customerAuthMidd
 router.route("/order/:id").get(customerAuthMiddleware,getAnOrder).put(customerAuthMiddleware, updateAnOrder).delete(customerAuthMiddleware, deleteAnOrder);
 
 router.route("/conference-rooms").get(getAllConferenceRooms).post(adminAuthMiddleware, createAConferenceRoom);
-router.route("/conferenceRoom/:id").get(getAConferenceRoom).put(adminAuthMiddleware, updateAConferenceRoom).delete(adminAuthMiddleware, deleteAConferenceRoom);
+router.route("/conference-room/:id").get(getAConferenceRoom).put(adminAuthMiddleware, updateAConferenceRoom).delete(adminAuthMiddleware, deleteAConferenceRoom);
 router.route("/events").get(getAllEvents).post((adminAuthMiddleware || customerAuthMiddleware ), createAnEvent);
 router.route("/event/:id").get(getAnEvent).put(adminAuthMiddleware, updateAnEvent).delete(adminAuthMiddleware, deleteAnEvent);
 router.route("/reservations").get(getAllReservations).post((customerAuthMiddleware || adminAuthMiddleware), createAReservation);

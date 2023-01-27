@@ -32,6 +32,11 @@ const DishesSchema = sequelize.define('Dishes',{
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
+    },
+    rating: {
+        type: DataTypes.INTEGER,
+        defaultValue: 5,
+        allowNull: true
     }
 },{
     timestamps: true

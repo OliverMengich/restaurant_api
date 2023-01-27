@@ -41,6 +41,11 @@ const Accommodation = sequelize.define('Accommodation',{
         type: DataTypes.BOOLEAN,
         defaultValue: true,
         allowNull: false,
+    },
+    rating: {
+        type: DataTypes.INTEGER,
+        defaultValue: 5,
+        allowNull: true
     }
 },{
     timestamps: true

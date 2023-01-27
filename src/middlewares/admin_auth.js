@@ -1,15 +1,16 @@
 console.log('Middleware loaded');
+import CustomersSchema from '../models/customers.model.js';
 import CryptoJS from 'crypto-js';
-export default  function(req,res,next){
+export default async function(req,res,next){
     console.log(req.body);
     if(req.body.userType && req.body.userType==="ADMIN" && !req.headers["authorization"]){
         console.log("Not Authenticated");
         return res.status(401).json({ error: "Not Authenticated" });
-    }else if(req.body.firstName && req.body.lastName && req.body.email && req.body.password && req.body.birthday){
+    }else if(req.body.userType !=="ADMIN" &&req.body.firstName && req.body.lastName && req.body.email && req.body.password && req.body.birthday){
         console.log("I am skipping coz I am a customer")
         next();
     }else{
-        console.log("Heeeeeeere")
+        console.log("Heeeeeeere because you need Authentification")
         let authToken = req.headers['authorization'];
         if (!authToken) {
             return res.status(401).json({error: 'Not Authenticated'})
@@ -21,7 +22,15 @@ export default  function(req,res,next){
         try {
             let decrypted = CryptoJS.AES.decrypt(authToken, 'Hello_Secret').toString(CryptoJS.enc.Utf8);
             decrypted = JSON.parse(decrypted);
-            console.log(decrypted);
+            const admin = await CustomersSchema.findOne({
+                where:{
+                    customer_id: decrypted.userId,
+                    userType: "ADMIN"
+                }
+            });
+            if (!admin) {
+                return res.status(401).json({ error: "Not Authenticated" });
+            }
             if(decrypted===null || decrypted.userId===null || decrypted.userType !== 'ADMIN'){
                 return res.status(401).json({error: 'Not Authenticated'})
             }else{

@@ -16,6 +16,7 @@ export const getAllCustomers = async (req,res)=> {
     }
 };
 export const createACustomer = async (req,res)=>{
+    console.log(req.userInfo);
     try {
         const customer = await createCustomer(req.body);
         return res.json({

@@ -16,10 +16,17 @@ const ConferenceRoom = sequelize.define('ConferenceRoom',{
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-
+    imageUrl:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     price: {
         type: DataTypes.FLOAT,
         allowNull: false,
+    },
+    rating:{
+        type: DataTypes.UUID,
+        allowNull: true,
     }
 });
 export default ConferenceRoom;
