@@ -23,7 +23,7 @@ export const createACustomer = async (req,res)=>{
             status: 'success'
         })
     } catch (error) {
-        return res.status(500).json({error: "Try Again"})
+        return res.status(500).json({error: "Try Again. Email is taken"})
     }
 }
 export const getACustomer = async (req,res)=>{

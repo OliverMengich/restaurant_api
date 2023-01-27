@@ -13,6 +13,14 @@ export const getCustomers =async function () {
     }
 }
 export const createCustomer = async function (customerData) {
+    const doesUserExist = await CustomersSchema.findOne({
+        where:{
+            email: customerData.email
+        }
+    });
+    if(doesUserExist){
+        throw new Error('User already exists');
+    }
     const customer = await CustomersSchema.create({ ...customerData });
     return customer;
 }
