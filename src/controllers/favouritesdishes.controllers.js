@@ -1,21 +1,23 @@
 import { getFavouriteDishes,addAFavouriteDish,removeAFavouriteDish } from "../services/favouritedishes.services.js";
 export const getAllFavouriteDishes = async function(req,res){
+    console.log(req.userInfo);
     try {
-        const favouritedishes = await getFavouriteDishes(req.body.customer);
+        const favouritedishes = await getFavouriteDishes(req.userInfo.userId);
         return res.status(200).json({
             favouritedishes,
             status: "success"
         })
     } catch (error) {
-        console.log(err);
+        console.log(error);
         return res.status(404).json({ error: err });
     }
 
 }
 export const addFavouriteDish = async function(req,res) {
     let customer = '';
+    console.log(req.userInfo);
     if (req.userInfo) {
-        customer = req.userInfo.customer;
+        customer = req.userInfo.userId;
     }else{
         customer = req.body.customer
     }

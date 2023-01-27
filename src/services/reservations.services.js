@@ -10,20 +10,29 @@ export const getReservations = async function () {
     }
 }
 export const createReservation = async function (reservationData) {
-    if(reservationData.meals){
-        const dishesId = await (await DishesSchema.findAll()).reduce((acc,val)=>{
-            acc.push(val.id)
-            return acc;
-        },[]);
-        console.log('Dishes ID:', dishes)
-        reservationData.meals.forEach(element => {
-            if (dishesId.indexOf(element) === -1) {
-                throw new Error("Meal not found, try adding again!!!");
-            }
-        });
+    try {
+        console.log('reservation data is: ',reservationData.meals);
+        if(reservationData.meals){
+            const dishesId = await (await DishesSchema.findAll()).reduce((acc,val)=>{
+                console.log(val.id);
+                acc.push(val.id)
+                return acc;
+                
+            },[]);
+            // console.log('Dishes ID:', dishesId)
+            reservationData.meals.forEach(element => {
+                console.log(element);
+                if (dishesId.indexOf(element) === -1) {
+                    throw new Error("Meal not found, try adding again!!!");
+                }
+            });
+        }
+        const reservation = await Reservation.create({ ...reservationData });
+        return reservation;
+    } catch (error) {
+        console.log(error);
+        throw new Error(error);
     }
-    const reservation = await Reservation.create({ ...reservationData });
-    return reservation;
 }
 export const getReservationById = async function (id, customerId) {
     const reservation = await Reservation.findOne({
@@ -49,7 +58,8 @@ export const updateReservation = async function (id, customerId, update) {
         throw new Error('No Reservation found!!');
     }
     reservation.set({
-        ...update
+        ...update,
+        meals: [...reservation.meals, update.meals]
     });
     await reservation.save();
     return reservation;

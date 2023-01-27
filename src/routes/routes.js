@@ -23,7 +23,7 @@ FavouriteDishes.belongsTo(CustomersSchema, {
     onDelete: "CASCADE",
 });
 // CustomersSchema.hasMany(OrdersSchema);
-DishesSchema.hasMany(Reservation,{foreignKey: 'dishes', constraints: true, onDelete: 'CASCADE'});
+// DishesSchema.hasMany(Reservation,{foreignKey: 'dishes', constraints: true, onDelete: 'CASCADE'});
 Reservation.belongsTo(CustomersSchema,{foreignKey: 'customer', constraints: false, onDelete: 'CASCADE'});
 const router = Router();
 router.get('/', (req, res) => {
@@ -41,14 +41,14 @@ router.route("/conference-rooms").get(getAllConferenceRooms).post(adminAuthMiddl
 router.route("/conference-room/:id").get(getAConferenceRoom).put(adminAuthMiddleware, updateAConferenceRoom).delete(adminAuthMiddleware, deleteAConferenceRoom);
 router.route("/events").get(getAllEvents).post((adminAuthMiddleware || customerAuthMiddleware ), createAnEvent);
 router.route("/event/:id").get(getAnEvent).put(adminAuthMiddleware, updateAnEvent).delete(adminAuthMiddleware, deleteAnEvent);
-router.route("/reservations").get(getAllReservations).post((customerAuthMiddleware || adminAuthMiddleware), createAReservation);
+router.route("/reservations").get(adminAuthMiddleware, getAllReservations).post((customerAuthMiddleware || adminAuthMiddleware), createAReservation);
 router.route("/reservation/:id").get(getAReservation).put((customerAuthMiddleware || adminAuthMiddleware), updateAReservation).delete(customerAuthMiddleware, deleteAReservation);
 router.route("/rooms").get(getAllRooms).post(adminAuthMiddleware, createARoom);
 router.route("/room/:id").get(getARoom).put(adminAuthMiddleware, updateARoom).delete(adminAuthMiddleware, deleteARoom);
 
-router.route("/favouritedishes").get((adminAuthMiddleware ||customerAuthMiddleware), getAllFavouriteDishes).post((adminAuthMiddleware ||customerAuthMiddleware),addFavouriteDish)
-router.route("favouritedish/:id").delete((adminAuthMiddleware || customerAuthMiddleware), removeFavouriteDish);
-router.get('/staff',async function (req, res) {
+router.route("/favouritedishes").get((adminAuthMiddleware), getAllFavouriteDishes).post((customerAuthMiddleware),addFavouriteDish)
+router.route("favouritedish/:id").delete((customerAuthMiddleware), removeFavouriteDish);
+router.get('/staff',adminAuthMiddleware, async function (req, res) {
     // filter the output time users of type ADMIN
     const staffMembers =await CustomersSchema.findAll({
         where:{

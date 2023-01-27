@@ -3,9 +3,9 @@ import FavouriteDishes from "../models/favouritedishes.model.js";
 export const getFavouriteDishes = async function(customer) {
     try {
         const favouritedishes = await FavouriteDishes.findAll({
-            where:{
-                customer
-            },
+            // where:{
+            //     customer
+            // },
             include:[{
                 model: CustomersSchema,
                 foreignKey: 'customer'
@@ -18,6 +18,7 @@ export const getFavouriteDishes = async function(customer) {
     }
 }
 export const addAFavouriteDish = async function (dishData) {
+    console.log(dishData);
     if (!dishData) {
         throw new Error("No dish")
     }
