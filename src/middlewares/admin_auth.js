@@ -1,6 +1,7 @@
 console.log('Middleware loaded');
 import CustomersSchema from '../models/customers.model.js';
 import CryptoJS from 'crypto-js';
+import config from '../config/config.js';
 export default async function(req,res,next){
     console.log(req.body);
     if(req.body.userType && req.body.userType==="ADMIN" && !req.headers["authorization"]){
@@ -20,7 +21,7 @@ export default async function(req,res,next){
             return res.status(401).json({error: 'Not Authenticated'})
         }
         try {
-            let decrypted = CryptoJS.AES.decrypt(authToken, 'Hello_Secret').toString(CryptoJS.enc.Utf8);
+            let decrypted = CryptoJS.AES.decrypt(authToken, config.SECRET).toString(CryptoJS.enc.Utf8);
             decrypted = JSON.parse(decrypted);
             const admin = await CustomersSchema.findOne({
                 where:{

@@ -30,8 +30,12 @@ export const getDishById = async function (id) {
 export const updateDish = async function (id, updateDishData) {
     try {
         const dish = await DishesSchema.findByPk(id);
+        if(!dish){
+            throw new Error("No dish found")
+        }
         dish.set({
-            ...updateDishData
+            ...updateDishData,
+            imageUrl: [...dish.imageUrl, ...updateDishData.imageUrl]
         });
         await dish.save();
         return dish;
