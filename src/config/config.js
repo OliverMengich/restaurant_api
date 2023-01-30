@@ -11,6 +11,7 @@ const config = {
     DATABASE: process.env.DATABASE,
     USERNAME: process.env.USER_NAME,
     PASSWORD: process.env.PASSWORD,
-    DATABASE_URL: process.env.DATABASE_URL
+    DATABASE_URL: process.env.DATABASE_URL,
+    SECRET: process.env.SECRET
 }
 export default config;

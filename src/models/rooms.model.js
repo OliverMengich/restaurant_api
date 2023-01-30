@@ -34,7 +34,7 @@ const Accommodation = sequelize.define('Accommodation',{
         allowNull: false,
     },
     roomImage: {
-        type: DataTypes.STRING,
+        type: DataTypes.ARRAY(DataTypes.STRING),
         allowNull: false,
     },
     roomStatus: {
