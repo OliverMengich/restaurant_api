@@ -40,7 +40,8 @@ export const updateDish = async function (id, updateDishData) {
         await dish.save();
         return dish;
     } catch (error) {
-        
+        console.log(error);
+        return {error: error.message}
     }
 }
 export const deleteDish = async function (id) {

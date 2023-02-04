@@ -5,7 +5,8 @@ export const getAllOrders = async function () {
         const orders = await OrdersSchema.findAll({
             include:[{
                 model: CustomersSchema,
-                foreignKey: 'customer'
+                foreignKey: 'customer',
+                attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
             }]
         });
         // console.log(orders);
@@ -33,7 +34,8 @@ export const getOrderById = async function (id,userId) {
             },
             include:[{
                 model: CustomersSchema,
-                foreignKey: 'customer'
+                foreignKey: 'customer',
+                attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
             }]
         });
         console.log(order);
@@ -53,7 +55,7 @@ export const updateOrder = async function (id,userId, updateOrderData) {
         return { error: "No Order found!!" };
     }
     order.set({
-        ...updateOrderData
+        ...updateOrderData,
     });
     await order.save();
     return order;

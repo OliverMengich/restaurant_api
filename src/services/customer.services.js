@@ -6,6 +6,7 @@ export const getCustomers =async function () {
             where:{
                 userType: "USER"
             },
+            attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
         });
         return customers;
     } catch (error) {
@@ -21,7 +22,9 @@ export const createCustomer = async function (customerData) {
     if(doesUserExist){
         throw new Error('User already exists');
     }
-    const customer = await CustomersSchema.create({ ...customerData });
+    const customer = await CustomersSchema.create({ ...customerData },{
+        attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
+    });
     return customer;
 }
 export const getCustomerById = async function (id) {
@@ -29,7 +32,8 @@ export const getCustomerById = async function (id) {
         include:[{
             model: OrdersSchema,
             foreignKey: 'CustomerCustomerId'
-        }]
+        }],
+        attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
     });
     console.log(customer);
     return customer;

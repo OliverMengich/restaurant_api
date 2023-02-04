@@ -1,5 +1,6 @@
 import Reservation from "../models/reservations.model.js";
 import DishesSchema from "../models/dishes.model.js";
+import CustomersSchema from "../models/customers.model.js";
 export const getReservations = async function () {
     try {
         const reservations = await Reservation.findAll();
@@ -39,7 +40,15 @@ export const getReservationById = async function (id, customerId) {
         where: {
             id,
             customer: customerId
-        }
+        },
+        include: [{
+            model: DishesSchema,
+            as: 'meals'
+        },{
+            model: CustomersSchema,
+            foreignKey: 'customer',
+            attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
+        }]
     });
     if (!reservation) {
         throw new Error('No Reservation found!!');

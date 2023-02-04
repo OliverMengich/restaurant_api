@@ -8,10 +8,30 @@ export const getFavouriteDishes = async function(customer) {
             // },
             include:[{
                 model: CustomersSchema,
-                foreignKey: 'customer'
+                foreignKey: 'customer',
+                attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
             }]
         })
-        return favouritedishes
+        return favouritedishes;
+    } catch (error) {
+        console.log(error);
+        return {error:"error"};
+    }
+}
+export const getAFavouriteDish = async function(id, customer){
+    try {
+        const favouritedish = await FavouriteDishes.findOne({
+            where:{
+                id,
+                customer
+            },
+            include:[{
+                model: CustomersSchema,
+                foreignKey: 'customer',
+                attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
+            }]
+        })
+        return favouritedish;
     } catch (error) {
         console.log(error);
         return {error:"error"};

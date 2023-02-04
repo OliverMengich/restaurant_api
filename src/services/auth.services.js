@@ -5,7 +5,8 @@ export const loginCustomer = async function (email, password) {
     const customer = await CustomersSchema.findOne({
         where: {
             email,
-        }
+        },
+        attributes: ['customer_id', 'email', 'birthday', 'userType', 'password']
     });
     if (customer && customer.password ===password) {
         try {
