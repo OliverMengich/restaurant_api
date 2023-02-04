@@ -12,7 +12,7 @@ app.use('/api',router);
 app.get('/',(rq,res)=>{
     res.send('<h1>Hello, world!!</h1>')
 });
-sequelize.sync({force: true}).then(()=>{
+sequelize.sync().then(()=>{
     app.listen(config.PORT,config.HOST,()=>{
         console.log(`Server Running http://${config.HOST}:${config.PORT} in ${config.NODE_ENV} mode`);
     })
