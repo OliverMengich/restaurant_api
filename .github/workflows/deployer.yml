@@ -39,12 +39,12 @@ jobs:
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run:  pnpm install
-      - name: Start Development Server
-        run: pnpm production && npx wait-on http://127.0.0.1:$PORT
+      # - name: Start Development Server
+        # run: pnpm production && npx wait-on http://127.0.0.1:$PORT
       - name: Run Unit Tests
-        run: npm run utest
+        run: pnpm utest
       - name: Run Integration Test
-        run: npm run itest
+        run: pnpm itest
   deploy:
     needs: test
     runs-on: ubuntu-latest

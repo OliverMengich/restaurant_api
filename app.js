@@ -17,3 +17,4 @@ sequelize.sync().then(()=>{
         console.log(`Server Running http://${config.HOST}:${config.PORT} in ${config.NODE_ENV} mode`);
     })
 }).catch(err=>{console.log(err)})
+export default app;
