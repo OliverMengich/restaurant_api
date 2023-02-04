@@ -4,11 +4,26 @@ import chai from 'chai';
 import app from '../../app.js';
 chai.should();
 chai.use(chaiHTTP);
-
+const token = "";
 describe('Integration Testing(Restaurant API)',()=>{
     describe('Get Customers',()=>{
+        it("should login an admin",(done)=>{
+            chai.request(app).post('/login')
+            .send({
+                email:"admin@gmail.com",
+                password:"password",
+            }).end((err,res)=>{
+                res.should.have.status(200);
+                res.body.should.be.a('object');
+                res.body.should.have.property('token');
+                token = res.body.token;
+                done();
+            }
+            )
+        })
         it('it should get only customer',(done)=>{
             chai.request(app).get('/customers')
+            .auth("Bearer",token.toString())
             .end((err,res)=>{
                 res.should.have.status(200);
                 res.body.customers.should.be.a('array');
