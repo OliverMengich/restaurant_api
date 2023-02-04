@@ -16,6 +16,7 @@ import { getAllRooms,createARoom,deleteARoom,getARoom,updateARoom } from '../con
 import { getAllFavouriteDishes,addFavouriteDish,removeFavouriteDish } from '../controllers/favouritesdishes.controllers.js';
 import customerAuthMiddleware from '../middlewares/customer_Auth.js';
 import adminAuthMiddleware from '../middlewares/admin_auth.js';
+import signInLimiter from '../middlewares/rate-limit.js';
 OrdersSchema.belongsTo(CustomersSchema,{foreignKey: 'customer', onDelete: 'CASCADE'});
 OrdersSchema.belongsTo(DishesSchema,{foreignKey: 'dishes',});
 FavouriteDishes.belongsTo(CustomersSchema, {
@@ -31,7 +32,7 @@ router.get('/', (req, res) => {
 });
 router.route("/customers").get(getAllCustomers).post(adminAuthMiddleware, createACustomer);
 router.route("/customer/:id").get(getACustomer).put(updateACustomer).delete(deleteACustomer);
-router.route("/auth").get((req,res)=>{res.send('Login here')}).post(login)
+router.route("/auth").get((req,res)=>{res.send('Login here')}).post(signInLimiter, login)
 router.route("/dishes").get(getDishes).post(adminAuthMiddleware, createADish);
 router.route("/dishes/:id").get(getADish).put(adminAuthMiddleware,updateADish).delete(adminAuthMiddleware, deleteADish);
 router.route("/orders").get(adminAuthMiddleware,getOrders).post(customerAuthMiddleware, createAnOrder);
