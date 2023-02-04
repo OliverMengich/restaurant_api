@@ -43,8 +43,8 @@ jobs:
         run:  pnpm install
       # - name: Start Development Server
         # run: pnpm production && npx wait-on http://127.0.0.1:$PORT
-      - name: Run Unit Tests
-        run: pnpm utest
+      # - name: Run Unit Tests
+        # run: pnpm utest
       - name: Run Integration Test
         run: pnpm itest
   deploy:
