@@ -7,6 +7,7 @@ const app = express();
 if (config.NODE_ENV=== 'development') {
     app.use(morgan('dev'))
 }
+console.log(config.NODE_ENV);
 app.use(express.json())
 app.use('/api',router);
 app.get('/',(rq,res)=>{
