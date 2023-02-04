@@ -27,6 +27,7 @@ describe('Unit Testing',()=>{
                 email: "email12@gmail.com",
                 birthday: new Date().toISOString(),
                 phone: "1234567890",
+                password: "123456",
             }
             const rs = await createCustomer(newCustomer);
             expect(rs).to.be.an('object');

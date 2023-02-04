@@ -1,5 +1,7 @@
 name: Restaurant API workflow
-on: push
+on: 
+  push:
+    branches: [ main ]
 jobs:
   test:
     environment: testing
