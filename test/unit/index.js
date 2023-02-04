@@ -14,11 +14,6 @@ describe('Unit Testing',()=>{
             expect(rs).to.be.an('array');
         })
     })
-    before('Deletes all data',()=>{
-        CustomersSchema.destroy({where: {}}).then(()=>{
-            console.log('Done Deleting All')
-        })
-    })
     describe('Test 2',()=>{
         it('Add A new customer',async()=>{
             const newCustomer = {
