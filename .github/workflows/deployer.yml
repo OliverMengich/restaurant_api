@@ -1,5 +1,5 @@
 name: Restaurant API workflow
-on: workflow_dispatch
+on: push
 jobs:
   test:
     environment: testing
