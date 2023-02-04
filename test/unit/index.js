@@ -26,6 +26,7 @@ describe('Unit Testing',()=>{
                 lastName: "test12",
                 email: "email12@gmail.com",
                 birthday: new Date().toISOString(),
+                phone: "1234567890",
             }
             const rs = await createCustomer(newCustomer);
             expect(rs).to.be.an('object');
@@ -34,13 +35,14 @@ describe('Unit Testing',()=>{
     describe('Adds a Staff Member',()=>{
         it('Adds an adminstrator',async ()=>{
             const newStaff = {
-                firstName: 'Admin1',
-                lastName: 'adminlast',
-                email:'staff1@gmail.com',
-                userType: 'ADMIN',
-                birthday: new Date('2000-11-10').toISOString(),
-                password: '123456'
-            }
+                firstName: "Admin1",
+                lastName: "adminlast",
+                email: "staff1@gmail.com",
+                userType: "ADMIN",
+                birthday: new Date("2000-11-10").toISOString(),
+                password: "123456",
+                phone: "1234567890",
+            };
             const rs = await createCustomer(newStaff);
             expect(rs).to.be.an('object');
         })
