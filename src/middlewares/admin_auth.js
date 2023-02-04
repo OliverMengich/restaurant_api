@@ -3,9 +3,7 @@ import CustomersSchema from '../models/customers.model.js';
 import CryptoJS from 'crypto-js';
 import config from '../config/config.js';
 export default async function(req,res,next){
-    console.log(req.body);
     if(req.body.userType && req.body.userType==="ADMIN" && !req.headers["authorization"]){
-        console.log("Not Authenticated");
         return res.status(401).json({ error: "Not Authenticated" });
     }else if(req.body.userType !=="ADMIN" &&req.body.firstName && req.body.lastName && req.body.email && req.body.password && req.body.birthday){
         console.log("I am skipping coz I am a customer")
@@ -17,11 +15,15 @@ export default async function(req,res,next){
             return res.status(401).json({error: 'Not Authenticated'})
         }
         authToken = authToken.split(' ')[1];
+        console.log('Auth token is: ',authToken);
         if (!authToken){
             return res.status(401).json({error: 'Not Authenticated'})
         }
         try {
             let decrypted = CryptoJS.AES.decrypt(authToken, config.SECRET).toString(CryptoJS.enc.Utf8);
+            if (!decrypted.userId) {
+                return res.status(401).json({ error: "Not Authenticated" });
+            }
             decrypted = JSON.parse(decrypted);
             const admin = await CustomersSchema.findOne({
                 where:{

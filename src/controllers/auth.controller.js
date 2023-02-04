@@ -8,7 +8,7 @@ export const login = async (req, res) => {
                 status: 'success'
             })
         }
-        return res.json({error:'error encountered'})
+        return res.status(401).json({error:'error encountered'})
     } catch (err) {
         console.log(err);
         return res.status(500).json({ error: err });
