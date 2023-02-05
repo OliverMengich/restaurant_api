@@ -39,9 +39,9 @@ jobs:
         run: |
             echo "Cache Hit: ${{ steps.cache-deps.outputs }}"
       - name: Install dependencies
-        if: steps.cache-deps.outputs.cache-hit != 'true'
+        # if: steps.cache-deps.outputs.cache-hit != 'true'
         run:  pnpm install
-      - name: Start Development Server
+      - name: Start Production Server
         run: pnpm production & npx wait-on http://127.0.0.1:$PORT
       - name: Run Unit Tests
         run: pnpm utest
