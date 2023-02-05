@@ -11,4 +11,5 @@ const config = {
     DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:Oliver8677@localhost:5432/development_db',
     SECRET: process.env.SECRET
 }
+console.log('DatabaseURL is: ',config.DATABASE_URL);
 export default config;
