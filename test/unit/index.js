@@ -20,10 +20,10 @@ describe('Unit Testing',()=>{
             const newStaff = {
                 firstName: "Admin1",
                 lastName: "adminlast",
-                email: "staff123@gmail.com",
+                email: "adminlast@gmail.com",
                 userType: "ADMIN",
                 birthday: new Date("2000-11-10").toISOString(),
-                password: "123456",
+                password: "password",
                 phone: "1234567890",
             };
             const rs = await createCustomer(newStaff);
