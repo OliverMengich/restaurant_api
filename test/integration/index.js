@@ -7,7 +7,7 @@ const token = "";
 describe('Integration Testing(Restaurant API)',()=>{
     describe('Get Customers',()=>{
         it("should login an admin",(done)=>{
-            chai.request(app).post('/api/auth')
+            chai.request(`http://localhost:${process.env.PORT}`).post('/api/auth')
             .send({
                 email:"admin@gmail.com",
                 password:"password",
