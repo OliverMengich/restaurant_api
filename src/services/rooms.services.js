@@ -21,6 +21,7 @@ export const updateRoom = async function (id, update) {
     if (!room) {
         return { error: 'No Room found!!' }
     }
+    update.imageUrl? [...room.imageUrl,...update.imageUrl]:'';
     room.set({
         ...update
     });

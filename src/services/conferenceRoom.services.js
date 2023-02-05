@@ -31,9 +31,9 @@ export const updateConferenceRoom = async function (id, update) {
     if (!conferenceRoom) {
         return { error: 'No Conference Room found!!' }
     }
+    update.imageUrl? update.imageUrl = [...conferenceRoom.imageUrl, ...update.imageUrl]:'';
     conferenceRoom.set({
-        ...update,
-        imageUrl: [...conferenceRoom.imageUrl, ...update.imageUrl]
+        ...update
     });
     await conferenceRoom.save();
     return conferenceRoom;

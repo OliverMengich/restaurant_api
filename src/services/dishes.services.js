@@ -33,9 +33,10 @@ export const updateDish = async function (id, updateDishData) {
         if(!dish){
             throw new Error("No dish found")
         }
+        
+        updateDishData.imageUrl? updateDishData.imageUrl = [...dish.imageUrl,...updateDishData.imageUrl]: '';
         dish.set({
             ...updateDishData,
-            imageUrl: [...dish.imageUrl, ...updateDishData.imageUrl]
         });
         await dish.save();
         return dish;

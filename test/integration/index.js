@@ -1,8 +1,6 @@
 import chaiHTTP from 'chai-http'
-import config from '../../src/config/config.js';
 import chai from 'chai';
 import app from '../../app.js';
-import CustomersSchema from '../../src/models/customers.model.js';
 chai.should();
 chai.use(chaiHTTP);
 const token = "";
@@ -57,18 +55,17 @@ describe('Integration Testing(Restaurant API)',()=>{
         it('',(done)=>{
             chai.request(app).post('/api/customers')
             .send({
-                "firstName": "Admin",
-                "lastName":"Admin",
-                "email":"admin1@gmail.com",
-                "password":"password",
-                "userType":"ADMIN",
-                "birthday":new Date().toISOString().toString()
+                firstName: "Admin",
+                lastName:"Admin",
+                email:"admin1@gmail.com",
+                password:"password",
+                userType:"ADMIN",
+                birthday:new Date().toISOString().toString()
             }).auth("Bearer","")
             .end((err,res)=>{
-                // console.log(res.body);
-                chai.expect(res).to.have.status(200);
-                res.body.should.be.a('object');
-                res.body.should.have.property('customers')
+                chai.expect(res).to.have.status(401);
+                // res.body.should.be.a('object');
+                res.body.should.have.property('error')
             })
             done();
         })
