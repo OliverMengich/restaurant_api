@@ -47,8 +47,10 @@ router.route("/reservation/:id").get(getAReservation).put((customerAuthMiddlewar
 router.route("/rooms").get(getAllRooms).post(adminAuthMiddleware, createARoom);
 router.route("/room/:id").get(getARoom).put(adminAuthMiddleware, updateARoom).delete(adminAuthMiddleware, deleteARoom);
 
-router.route("/favouritedishes").get((adminAuthMiddleware), getAllFavouriteDishes).post((customerAuthMiddleware),addFavouriteDish)
-router.route("favouritedish/:id").delete((customerAuthMiddleware), removeFavouriteDish);
+router.route("/favouritedishes").get((adminAuthMiddleware), getAllFavouriteDishes)
+// router.route("favouritedish/:id")
+router.route("/customer/favouritedishes").get(customerAuthMiddleware).post((customerAuthMiddleware),addFavouriteDish)
+router.route("/customer/:id/favouritedish/:dishId").delete((customerAuthMiddleware), removeFavouriteDish);
 router.get('/staff',adminAuthMiddleware, async function (req, res) {
     // filter the output time users of type ADMIN
     const staffMembers =await CustomersSchema.findAll({

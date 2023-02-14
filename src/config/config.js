@@ -8,7 +8,7 @@ const config = {
     NODE_ENV: process.env.NODE_ENV,
     HOST: process.env.HOST || 'localhost',
     PORT: process.env.PORT || 3000,
-    DATABASE_URL: process.env.DATABASE_URL || 'postgresql://postgres:Oliver8677@localhost:5432/development_db',
+    DATABASE_URL: process.env.DATABASE_URL,
     SECRET: process.env.SECRET
 }
 console.log('DatabaseURL is: ',config.DATABASE_URL);

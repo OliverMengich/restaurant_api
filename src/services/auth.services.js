@@ -2,12 +2,14 @@ import CustomersSchema from "../models/customers.model.js";
 import CryptoJS from "crypto-js";
 //login customer
 export const loginCustomer = async function (email, password) {
+    console.log({email});
     const customer = await CustomersSchema.findOne({
         where: {
-            email,
+            email
         },
         attributes: ['customer_id', 'email', 'birthday', 'userType', 'password']
     });
+    console.log('customer is: ',customer);
     if (customer && customer.password ===password) {
         try {
             const customerObj = {
@@ -24,5 +26,5 @@ export const loginCustomer = async function (email, password) {
             return error;
         }
     }
-    return;
+    // return {err: 'Invalid Credentials'}
 }
