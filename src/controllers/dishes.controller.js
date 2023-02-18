@@ -1,6 +1,13 @@
 import { getAllDishes, createDish, deleteDish, getDishById, updateDish } from "../services/dishes.services.js";
 export const getDishes = async (req, res) => {
     try {
+        if(req.params.limit){
+            const dishes = await getAllDishes();
+            return res.json({
+                dishes,
+                status: 'success'
+            })
+        }
         const dishes = await getAllDishes();
         return res.json({
             dishes,

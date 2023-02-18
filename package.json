@@ -6,7 +6,7 @@
     "scripts": {
         "itest": "set NODE_ENV=testing&& mocha ./test/integration/index.js --exit --timeout 10000",
         "utest": "set NODE_ENV=testing&& mocha ./test/unit/index.js --exit --timeout 10000",
-        "start": "set NODE_ENV=development&& nodemon app.js",
+        "dev": "set NODE_ENV=development&& nodemon app.js",
         "production": "set NODE_ENV=production&& node app.js"
     },
     "type": "module",

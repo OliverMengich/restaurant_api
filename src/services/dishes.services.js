@@ -1,6 +1,13 @@
 import DishesSchema from "../models/dishes.model.js";
-export const getAllDishes = async function () {
+export const getAllDishes = async function (limit) {
     try {
+        if (limit) {
+            const dishes = await DishesSchema.findAll({
+                limit: parseInt(limit.split('=')[1]),
+                order: sequelize.random()
+            });
+            return dishes
+        }
         const dishes = await DishesSchema.findAll();
         return dishes
     } catch (error) {

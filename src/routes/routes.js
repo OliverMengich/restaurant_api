@@ -33,7 +33,7 @@ router.get('/', (req, res) => {
 router.route("/customers").get(getAllCustomers).post(adminAuthMiddleware, createACustomer);
 router.route("/customer/:id").get(getACustomer).put(updateACustomer).delete(deleteACustomer);
 router.route("/auth").get((req,res)=>{res.send('Login here')}).post(signInLimiter, login)
-router.route("/dishes").get(getDishes).post(adminAuthMiddleware, createADish);
+router.route("/dishes/:limit?").get(getDishes).post(adminAuthMiddleware, createADish);
 router.route("/dishes/:id").get(getADish).put(adminAuthMiddleware,updateADish).delete(adminAuthMiddleware, deleteADish);
 router.route("/orders").get(adminAuthMiddleware,getOrders).post(customerAuthMiddleware, createAnOrder);
 router.route("/order/:id").get(customerAuthMiddleware,getAnOrder).put(customerAuthMiddleware, updateAnOrder).delete(customerAuthMiddleware, deleteAnOrder);
@@ -44,7 +44,7 @@ router.route("/events").get(getAllEvents).post((adminAuthMiddleware || customerA
 router.route("/event/:id").get(getAnEvent).put(adminAuthMiddleware, updateAnEvent).delete(adminAuthMiddleware, deleteAnEvent);
 router.route("/reservations").get(adminAuthMiddleware, getAllReservations).post((customerAuthMiddleware || adminAuthMiddleware), createAReservation);
 router.route("/reservation/:id").get(getAReservation).put((customerAuthMiddleware || adminAuthMiddleware), updateAReservation).delete(customerAuthMiddleware, deleteAReservation);
-router.route("/rooms").get(getAllRooms).post(adminAuthMiddleware, createARoom);
+router.route("/rooms/:limit?").get(getAllRooms).post(adminAuthMiddleware, createARoom);
 router.route("/room/:id").get(getARoom).put(adminAuthMiddleware, updateARoom).delete(adminAuthMiddleware, deleteARoom);
 
 router.route("/favouritedishes").get((adminAuthMiddleware), getAllFavouriteDishes)

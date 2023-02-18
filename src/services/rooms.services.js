@@ -1,6 +1,15 @@
+import { Sequelize } from "sequelize";
 import Accommodation from "../models/rooms.model.js";
-export const getRooms = async function () {
+import sequelize from "../database/db.js";
+export const getRooms = async function (limit) {
     try {
+        if (limit) {
+            const rooms = await Accommodation.findAll({
+                limit: parseInt(limit.split('=')[1]),
+                order: sequelize.random()
+            });
+            return rooms;
+        }
         const rooms = await Accommodation.findAll();
         return rooms;
     } catch (error) {
