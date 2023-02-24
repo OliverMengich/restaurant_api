@@ -17,7 +17,7 @@ export const createCustomer = async function (customerData) {
     const doesUserExist = await CustomersSchema.findOne({
         where:{
             email: customerData.email
-        }
+        },
     });
     if(doesUserExist){
         throw new Error('User already exists');
@@ -25,6 +25,7 @@ export const createCustomer = async function (customerData) {
     const customer = await CustomersSchema.create({ ...customerData },{
         attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
     });
+    console.log(customer)
     return customer;
 }
 export const getCustomerById = async function (id) {
