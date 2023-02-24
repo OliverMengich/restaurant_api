@@ -1,6 +1,7 @@
 import CustomersSchema from "../models/customers.model.js";
 import CryptoJS from "crypto-js";
 //login customer
+import config from "../config/config.js";
 export const loginCustomer = async function (email, password) {
     console.log({email});
     const customer = await CustomersSchema.findOne({
@@ -18,7 +19,7 @@ export const loginCustomer = async function (email, password) {
                 birthday: customer.birthday,
                 userType: customer.userType
             }
-            const encrypted = CryptoJS.AES.encrypt(JSON.stringify(customerObj), 'Hello_Secret').toString();
+            const encrypted = CryptoJS.AES.encrypt(JSON.stringify(customerObj), config.SECRET).toString();
             console.log(encrypted);
             return encrypted;
         } catch (error) {
