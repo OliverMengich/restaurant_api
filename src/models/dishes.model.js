@@ -17,7 +17,7 @@ const DishesSchema = sequelize.define('Dishes',{
         allowNull: false
     },
     imageUrl:{
-        type: DataTypes.ARRAY(DataTypes.STRING),
+        type: DataTypes.STRING,
         allowNull: false
     },
     description:{
@@ -25,7 +25,7 @@ const DishesSchema = sequelize.define('Dishes',{
         allowNull: false
     },
     category:{
-        type: DataTypes.ENUM('BREAKFAST','LUNCH','DINNER','SNACKS','DRINKS'),
+        type: DataTypes.ENUM('Breakfast','Lunch','Dinner','Snacks','Drinks','Desserts'),
         allowNull: false
     },
     featured:{
