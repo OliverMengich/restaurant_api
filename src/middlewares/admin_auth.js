@@ -21,10 +21,10 @@ export default async function(req,res,next){
         }
         try {
             let decrypted = CryptoJS.AES.decrypt(authToken, config.SECRET).toString(CryptoJS.enc.Utf8);
+            decrypted = JSON.parse(decrypted);
             if (!decrypted.userId) {
                 return res.status(401).json({ error: "Not Authenticated" });
             }
-            decrypted = JSON.parse(decrypted);
             const admin = await CustomersSchema.findOne({
                 where:{
                     customer_id: decrypted.userId,
