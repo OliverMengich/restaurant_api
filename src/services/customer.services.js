@@ -10,7 +10,7 @@ export const getCustomers =async function () {
         });
         return customers;
     } catch (error) {
-        console.log(error);
+        return { error: 'Error encountered' }
     }
 }
 export const createCustomer = async function (customerData) {
@@ -25,7 +25,6 @@ export const createCustomer = async function (customerData) {
     const customer = await CustomersSchema.create({ ...customerData },{
         attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
     });
-    console.log(customer)
     return customer;
 }
 export const getCustomerById = async function (id) {
@@ -36,7 +35,6 @@ export const getCustomerById = async function (id) {
         }],
         attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
     });
-    console.log(customer);
     return customer;
 }
 export const updateCustomer = async function (id,update) {
@@ -56,6 +54,5 @@ export const deleteCustomer = async function(id){
         return{error: 'No Customer found!!'}
     }
     const res =await customer.destroy();
-    console.log(res);
     return {msg:'customer deleted'}
 }

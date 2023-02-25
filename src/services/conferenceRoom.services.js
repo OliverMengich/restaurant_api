@@ -5,13 +5,18 @@ export const getConferenceRooms = async function () {
         const conferenceRooms = await ConferenceRoom.findAll();
         return conferenceRooms;
     } catch (error) {
-        console.log(error);
+        return { error: 'Error encountered'}
     }
 }
 // only an admin can create a conference room
 export const createConferenceRoom = async function (conferenceRoomData) {
-    const conferenceRoom = await ConferenceRoom.create({ ...conferenceRoomData });
-    return conferenceRoom;
+    try {
+        const conferenceRoom = await ConferenceRoom.create({ ...conferenceRoomData });
+        return conferenceRoom;
+    } catch (error) {
+        
+        return { error: 'Error encountered'}
+    }
 }
 export const getConferenceRoomById = async function (id, customerId) {
     const conferenceRoom = await ConferenceRoom.findOne({
@@ -19,7 +24,6 @@ export const getConferenceRoomById = async function (id, customerId) {
             id
         }
     });
-    console.log(conferenceRoom);
     return conferenceRoom;
 }
 export const updateConferenceRoom = async function (id, update) {
@@ -48,6 +52,5 @@ export const deleteConferenceRoom = async function (id, customerId) {
         return { error: 'No Conference Room found!!' }
     }
     const res = await conferenceRoom.destroy();
-    console.log(res);
     return { msg: 'conference room deleted' }
 }

@@ -22,7 +22,6 @@ export const createDish = async function (req) {
         const dish = await DishesSchema.create({...req});
         return dish
     } catch (error) {
-        console.log(error);
         return { error }
     }
 }
@@ -48,7 +47,6 @@ export const updateDish = async function (id, updateDishData) {
         await dish.save();
         return dish;
     } catch (error) {
-        console.log(error);
         return {error: error.message}
     }
 }
@@ -60,10 +58,8 @@ export const deleteDish = async function (id) {
             return { error: 'Error encountered' }
         }
         const res = await dish.destroy();
-        console.log(res);
         return { msg: 'dish deleted' }
     } catch (error) {
-        console.log(error);
         return { error: 'Error encountered' }
     }
 }

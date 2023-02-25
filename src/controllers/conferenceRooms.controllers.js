@@ -14,6 +14,7 @@ export const getAllConferenceRooms = async function(req,res){
 }
 //these routes are only accessible to admins
 export const createAConferenceRoom = async function(req,res){
+    console.log(req.body);
     try {
         const conferenceRoom = await createConferenceRoom(req.body);
         return res.json({

@@ -31,7 +31,6 @@ export const createReservation = async function (reservationData) {
         const reservation = await Reservation.create({ ...reservationData });
         return reservation;
     } catch (error) {
-        console.log(error);
         throw new Error(error);
     }
 }
@@ -53,7 +52,6 @@ export const getReservationById = async function (id, customerId) {
     if (!reservation) {
         throw new Error('No Reservation found!!');
     }
-    console.log(reservation);
     return reservation;
 }
 export const updateReservation = async function (id, customerId, update) {

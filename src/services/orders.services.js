@@ -9,15 +9,13 @@ export const getAllOrders = async function () {
                 attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
             }]
         });
-        // console.log(orders);
         return orders
     } catch (error) {
-        console.log(error);
+        return {error:"error"};
     }
     
 };
 export const createOrder = async function(orderData){
-    // console.log(req.userInfo);
     if (!orderData) {
         throw new Error("No data Provided")
     }
@@ -25,7 +23,6 @@ export const createOrder = async function(orderData){
     return order;
 }
 export const getOrderById = async function (id,userId) {
-    console.log(id,userId);
     try {
         const order = await OrdersSchema.findOne({
             where:{
@@ -38,10 +35,9 @@ export const getOrderById = async function (id,userId) {
                 attributes: ['customer_id', 'email', 'birthday', 'firstName', 'lastName', 'phone'],
             }]
         });
-        console.log(order);
         return order;
     } catch (error) {
-        console.log(error);
+        return {error:"error"};
     }
 };
 export const updateOrder = async function (id,userId, updateOrderData) {
@@ -71,6 +67,5 @@ export const deleteOrder = async function(id,userId){
         return{error: 'No Order found!!'}
     }
     const res =await order.destroy();
-    console.log(res);
     return {msg:'Order deleted'}
 }

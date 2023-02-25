@@ -14,7 +14,6 @@ export const getFavouriteDishes = async function(customer) {
         })
         return favouritedishes;
     } catch (error) {
-        console.log(error);
         return {error:"error"};
     }
 }
@@ -33,12 +32,10 @@ export const getAFavouriteDish = async function(id, customer){
         })
         return favouritedish;
     } catch (error) {
-        console.log(error);
         return {error:"error"};
     }
 }
 export const addAFavouriteDish = async function (dishData) {
-    console.log(dishData);
     if (!dishData) {
         throw new Error("No dish")
     }
@@ -59,7 +56,6 @@ export const removeAFavouriteDish = async function(id, customer){
             return {error: "No Dish"}
         }
         const res = await removingDish.destroy();
-        console.log(res);
         return {msg: "Dish removed"}
     } catch (error) {
         return {error}

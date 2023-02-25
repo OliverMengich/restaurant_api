@@ -4,7 +4,6 @@ export const getEvents = async function () {
         const events = await Event.findAll();
         return events;
     } catch (error) {
-        console.log(error);
     }
 }
 export const createEvent = async function (eventData) {
@@ -18,7 +17,6 @@ export const getEventById = async function (id,customerId) {
             customer: customerId
         }
     });
-    console.log(event);
     return event;
 }
 export const updateEvent = async function (id, customerId, update) {
@@ -48,6 +46,5 @@ export const deleteEvent = async function (id, customerId) {
         return { error: 'No Event found!!' }
     }
     const res = await event.destroy();
-    console.log(res);
     return { msg: 'event deleted' }
 }

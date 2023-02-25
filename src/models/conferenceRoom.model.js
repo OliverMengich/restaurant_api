@@ -25,8 +25,9 @@ const ConferenceRoom = sequelize.define('ConferenceRoom',{
         allowNull: false,
     },
     rating:{
-        type: DataTypes.UUID,
+        type: DataTypes.INTEGER,
         allowNull: true,
     }
 });
+
 export default ConferenceRoom;
